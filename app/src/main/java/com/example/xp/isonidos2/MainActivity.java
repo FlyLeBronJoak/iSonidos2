@@ -2,6 +2,7 @@ package com.example.xp.isonidos2;
 
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.VideoView;
 
 import java.lang.reflect.Field;
+import java.net.URI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        LinearLayout principal =  findViewById(R.id.botones);
+        LinearLayout principal =  (LinearLayout) findViewById(R.id.botones);
 
         //añado el view del video
 
@@ -53,6 +55,12 @@ public class MainActivity extends AppCompatActivity {
         Log.i("etiqueta: ", findViewById(view.getId()).getTag().toString());
         Button b = (Button) findViewById(view.getId());
         MediaPlayer m = new MediaPlayer();
+
+        VideoView videoview =(VideoView) findViewById(R.id.videoView);
+        Uri uri = Uri.parse("android.resource://"+getPackageName()+"/"+view.getTag());
+        videoview.setVideoURI(uri);
+        videoview.start();
+
         m = MediaPlayer.create(this, (int)findViewById(view.getId()).getTag());
         m.start();
         m.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
@@ -66,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private LinearLayout creaLineaBotones(int numeroLinea){
         LinearLayout.LayoutParams parametros = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT
